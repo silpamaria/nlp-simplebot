@@ -1,40 +1,25 @@
 import tkinter.scrolledtext as tks #creates a scrollable text window
-import os
-import openai
-
-
-
-openai.api_type = "azure"
-
-openai.api_base = "https://genaitraining-aoai2.openai.azure.com/"
-
-openai.api_version = "2023-09-15-preview"
-
-api_key = "4d78888ae7d34d38bf5a0ec97a69a6f6"
-
-openai.api_key = api_key
-
-openai.api_key=os.getenv('OPENAI_KEY')
 
 from datetime import datetime
 from tkinter import *
 
+
 # Generating response
 def get_bot_response(user_input):
-    prompt = f"Please provide a response to the following user input: '{user_input}'"
 
-    response = openai.Completion.create(engine="text-davinci-003",
-        prompt=prompt,
-        max_tokens=150,
-        n=1,
-        stop=None,
-        temperature=0.5,
-    )
-
-    bot_response = response.choices[0].text.strip()
-    return bot_response
-
-
+  bot_response = ""
+  if(user_input == "hello"):
+    bot_response = "Hi!"
+  elif(user_input == "hi" or user_input == "hii" or user_input == "hiiii"):
+    bot_response = "Hello there! How are you?"
+  elif(user_input == "how are you"):
+    bot_response = "Oh, I'm great! How about you?"
+  elif(user_input == "fine" or user_input == "i am good" or user_input == "i am doing good"):
+    bot_response = "That's excellent! How can I help you today?"
+  else:
+    bot_response = "I'm sorry, I don't understand..."      
+    
+  return bot_response
 
 
 def create_and_insert_user_frame(user_input):
@@ -77,8 +62,6 @@ def create_and_insert_bot_frame(bot_response):
   chatWindow.insert(END, "\n\n" + "")
 
 
-
-
 def send(event):
     chatWindow.config(state=NORMAL)
 
@@ -92,7 +75,6 @@ def send(event):
     chatWindow.config(state=DISABLED)
     userEntryBox.delete("1.0","end")
     chatWindow.see('end')
-
 
 
 baseWindow = Tk()
@@ -121,4 +103,4 @@ chatWindow.place(x=1, y=1, height=200, width=500)
 userEntryBox.place(x=3, y=202, height=27)
 sendButton.place(x=430, y=200)
 
-baseWindow.mainloop()       
+baseWindow.mainloop()  
